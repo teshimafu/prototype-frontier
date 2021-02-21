@@ -1,13 +1,14 @@
 <template>
   <div class="portfolio-list">
-    <PortfolioTable :portfolioList="portfolioList" />
+    <PortfolioTable :portfolioList="state.portfolioList" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { Portfolio } from "../models/Portfolio";
+import { Portfolio } from "../models/portfolio";
 import PortfolioTable from "@/molecules/PortfolioTable.vue";
+import { PortfolioService } from "../services/portolioService";
 
 export default defineComponent({
   name: "PortfolioList",
@@ -15,21 +16,13 @@ export default defineComponent({
     PortfolioTable
   },
   setup() {
-    const portfolioList = reactive<Portfolio[]>([
-      {
-        id: 1,
-        title: "シロナガスクジラ",
-        author: "teshima",
-        createDate: "1/1",
-        tags: ["1", "2", "3"],
-        abstruct: "## title etc...",
-        source: "https:google.com",
-        url: "https://qiita.com"
-      }
-    ]);
-    return {
-      portfolioList
-    };
+    const state = reactive<{ portfolioList: Portfolio[] }>({
+      portfolioList: []
+    });
+    PortfolioService.getPortfolioList().then(res => {
+      state.portfolioList = res;
+    });
+    return { state };
   }
 });
 </script>

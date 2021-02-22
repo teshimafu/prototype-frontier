@@ -3,7 +3,6 @@ export interface Portfolio {
   title: string;
   author: string;
   createDate: string;
-  tags: string[];
   abstruct: string;
   url: string;
   source: string;

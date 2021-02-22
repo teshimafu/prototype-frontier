@@ -8,11 +8,11 @@ replace local.packages/controller => ./server/controller
 
 replace local.packages/model => ./server/model
 
+replace local.packages/service => ./server/service
+
 require (
-	github.com/gin-contrib/cors v1.3.1 // indirect
-	github.com/gin-contrib/static v0.0.0-20200916080430-d45d9a37d28e // indirect
-	github.com/gin-gonic/gin v1.6.3 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
@@ -24,5 +24,7 @@ require (
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	local.packages/controller v0.0.0-00010101000000-000000000000 // indirect
+	local.packages/model v0.0.0-00010101000000-000000000000 // indirect
 	local.packages/server v0.0.0-00010101000000-000000000000 // indirect
+	local.packages/service v0.0.0-00010101000000-000000000000 // indirect
 )

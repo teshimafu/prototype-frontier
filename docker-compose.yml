@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: my_database_container
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: portfolio_database
+      MYSQL_USER: portfolio_app_user
+      MYSQL_PASSWORD: teshima
+      TZ: "Asia/Tokyo"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/data:/var/lib/mysql
+    ports:
+      - 3306:3306

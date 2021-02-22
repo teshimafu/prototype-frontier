@@ -13,9 +13,7 @@ export class PortfolioService {
    * getPortfolioList
    */
   public static getPortfolioList = async (): Promise<Portfolio[]> => {
-    const { data } = await axiosInstance.get<{
-      data: Portfolio[];
-    }>("/api/portfolio");
-    return data.data;
+    const { data } = await axiosInstance.get<Portfolio[]>("/api/portfolio");
+    return data;
   };
 }

@@ -20,17 +20,15 @@
         <td>{{ data.title }}</td>
         <td>{{ data.author }}</td>
         <td>{{ data.createDate }}</td>
-        <td>{{ data.tags.join(",") }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType } from "vue";
 import { Portfolio } from "../models/portfolio";
 import router from "../router";
-import { PortfolioService } from "../services/portolioService";
 
 export default defineComponent({
   name: "PortolioTable",

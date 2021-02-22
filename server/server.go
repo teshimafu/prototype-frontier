@@ -7,7 +7,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
-	"local.packages/controller"
 )
 
 //Server is start server method
@@ -27,7 +26,7 @@ func Server() {
 	{
 		portfolioEngine := apiEngine.Group("/portfolio")
 		{
-			portfolioEngine.GET("", controller.GetPortfolioList)
+			portfolioEngine.GET("", getList)
 		}
 	}
 	engine.Run(":3000")

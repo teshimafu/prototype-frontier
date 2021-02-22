@@ -1,8 +1,7 @@
-package service
+package server
 
 import (
 	"github.com/jinzhu/gorm"
-	"local.packages/model"
 )
 
 func gormConnect() *gorm.DB {
@@ -19,6 +18,6 @@ func gormConnect() *gorm.DB {
 		panic(err.Error())
 	}
 	db.SingularTable(true)
-	db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Portfolio{})
+	db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Portfolio{})
 	return db
 }

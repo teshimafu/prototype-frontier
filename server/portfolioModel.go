@@ -1,4 +1,4 @@
-package model
+package server
 
 //PortfolioList is typeof PortfolioList information json
 type PortfolioList struct {

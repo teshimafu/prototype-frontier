@@ -4,12 +4,6 @@ go 1.15
 
 replace local.packages/server => ./server
 
-replace local.packages/controller => ./server/controller
-
-replace local.packages/model => ./server/model
-
-replace local.packages/service => ./server/service
-
 require (
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
@@ -23,8 +17,5 @@ require (
 	golang.org/x/sys v0.0.0-20210220050731-9a76102bfb43 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	local.packages/controller v0.0.0-00010101000000-000000000000 // indirect
-	local.packages/model v0.0.0-00010101000000-000000000000 // indirect
 	local.packages/server v0.0.0-00010101000000-000000000000 // indirect
-	local.packages/service v0.0.0-00010101000000-000000000000 // indirect
 )

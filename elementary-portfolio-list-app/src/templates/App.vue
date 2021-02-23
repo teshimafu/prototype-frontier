@@ -1,10 +1,22 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <Header />
+    <router-view />
+    <Footer />
   </div>
-  <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import Header from "@/organisms/Header.vue";
+import Footer from "@/organisms/Footer.vue";
+export default defineComponent({
+  components: {
+    Header,
+    Footer
+  }
+});
+</script>
 
 <style>
 #app {

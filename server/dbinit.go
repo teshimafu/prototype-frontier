@@ -16,7 +16,7 @@ func migration() error {
 func gormConnect() (*gorm.DB, error) {
 	DBMS := "mysql"
 	USER := "portfolio_app_user"
-	PASS := "teshima"
+	PASS := "portfolio_password"
 	PROTOCOL := "tcp(127.0.0.1:3306)"
 	DBNAME := "portfolio_database"
 	PARSETIME := "true"

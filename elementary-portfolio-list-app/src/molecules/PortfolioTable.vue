@@ -6,7 +6,6 @@
         <td>タイトル</td>
         <td>登録者</td>
         <td>作成日</td>
-        <td>タグ</td>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +18,7 @@
         <th>{{ data.id }}</th>
         <td>{{ data.title }}</td>
         <td>{{ data.author }}</td>
-        <td>{{ data.createDate }}</td>
+        <td>{{ data.created_at }}</td>
       </tr>
     </tbody>
   </table>

@@ -1,12 +1,28 @@
 package server
 
-//getPortfolioList is return Portfoliolist
-func getPortfolioList() [](Portfolio) {
-	db := gormConnect()
+import "time"
+
+func getPortfolioList() ([](Portfolio), error) {
+	db, err := gormConnect()
+	if err != nil {
+		return [](Portfolio){}, err
+	}
 	defer db.Close()
 
 	portfolioList := [](Portfolio){}
 
 	db.Find(&portfolioList)
-	return portfolioList
+	return portfolioList, nil
+}
+
+func postPortfolio(p *Portfolio) error {
+	db, err := gormConnect()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	p.CreatedAt = time.Now()
+	db.Create(p)
+	return nil
 }

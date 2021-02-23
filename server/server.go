@@ -11,6 +11,9 @@ import (
 
 //Server is start server method
 func Server() {
+	if err := migration(); err != nil {
+		panic("db connection error!")
+	}
 	engine := gin.Default()
 	config := cors.DefaultConfig()
 	runnningMode := os.Getenv("GIN_MODE")
@@ -18,15 +21,17 @@ func Server() {
 		fmt.Println("release mode")
 	} else {
 		fmt.Println("debug mode")
-		config.AllowOrigins = []string{"http://localhost:5000"}
-		engine.Use(cors.New(config))
+		config.AllowOrigins = []string{"*"}
 	}
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE"}
+	engine.Use(cors.New(config))
 	engine.Use(static.Serve("/", static.LocalFile("./static", false)))
 	apiEngine := engine.Group("/api")
 	{
 		portfolioEngine := apiEngine.Group("/portfolio")
 		{
-			portfolioEngine.GET("", getList)
+			portfolioEngine.GET("", getPortfolioListHandler)
+			portfolioEngine.POST("", postPortfolioHandler)
 		}
 	}
 	engine.Run(":3000")

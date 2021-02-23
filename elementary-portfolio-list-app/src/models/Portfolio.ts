@@ -2,7 +2,7 @@ export interface Portfolio {
   id: number;
   title: string;
   author: string;
-  createDate: string;
+  created_at: string;
   abstruct: string;
   url: string;
   source: string;

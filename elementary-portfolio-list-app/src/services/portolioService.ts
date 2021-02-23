@@ -16,4 +16,11 @@ export class PortfolioService {
     const { data } = await axiosInstance.get<Portfolio[]>("/api/portfolio");
     return data;
   };
+
+  /**
+   * getPortfolioList
+   */
+  public static postPortfolio = async (portfolio: Portfolio) => {
+    await axiosInstance.post("/api/portfolio", portfolio);
+  };
 }

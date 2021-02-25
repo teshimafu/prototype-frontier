@@ -15,5 +15,5 @@ type Portfolio struct {
 	Abstruct  string    `gorm:"type:text" json:"abstruct"`
 	Source    string    `gorm:"type:varchar(1024)" json:"source"`
 	Link      string    `gorm:"type:varchar(1024)" json:"link"`
-	CreatedAt time.Time `gorm:"type:datetime" json:"created_at"`
+	CreatedAt time.Time `gorm:"type:timestamp" json:"created_at"`
 }

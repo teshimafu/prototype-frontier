@@ -1,6 +1,8 @@
 package server
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -9,22 +11,24 @@ func migration() error {
 	if err != nil {
 		return err
 	}
-	db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Portfolio{})
+	db.Set("gorm:table_options", "ENGINE=InnoDB")
+	db.AutoMigrate(&Portfolio{})
 	return nil
 }
 
 func gormConnect() (*gorm.DB, error) {
-	DBMS := "mysql"
-	USER := "portfolio_app_user"
-	PASS := "portfolio_password"
-	PROTOCOL := "tcp(127.0.0.1:3306)"
-	DBNAME := "portfolio_database"
-	PARSETIME := "true"
+	DBMS := "postgres"
+	HOST := "localhost"
+	PORT := "5432"
+	USER := "app_user"
+	PASS := "teshimapw"
+	DBNAME := "prototype_database"
 
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?parseTime=" + PARSETIME
+	CONNECT := "host=" + HOST + " port=" + PORT + " user=" + USER + " dbname=" + DBNAME + " password=" + PASS + " sslmode=disable"
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	db.SingularTable(true)

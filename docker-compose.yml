@@ -5,10 +5,10 @@ services:
     image: postgres:12-alpine
     container_name: postgres_container
     environment:
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: teshimapw
-      POSTGRES_DB: prototype_database
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
     ports:
-      - "5432:5432"
+      - "5432:${POSTGRES_PORT}"
     volumes:
       - ./db/data:/var/lib/postgresql/data

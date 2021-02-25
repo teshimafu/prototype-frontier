@@ -1,17 +1,14 @@
 version: "3"
 
 services:
-  db:
-    image: mysql:5.7
-    container_name: my_database_container
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres_container
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: portfolio_database
-      MYSQL_USER: portfolio_app_user
-      MYSQL_PASSWORD: portfolio_password
-      TZ: "Asia/Tokyo"
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - ./db/data:/var/lib/mysql
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
     ports:
-      - 3306:3306
+      - "5432:${POSTGRES_PORT}"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data

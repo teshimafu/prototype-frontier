@@ -1,3 +1,4 @@
 /static
 /db/data
+/node_modules
 .env

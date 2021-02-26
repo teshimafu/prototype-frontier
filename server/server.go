@@ -34,5 +34,10 @@ func Server() {
 			portfolioEngine.POST("", postPortfolioHandler)
 		}
 	}
-	engine.Run(":3000")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "3000"
+	}
+	engine.Run(":" + port)
 }

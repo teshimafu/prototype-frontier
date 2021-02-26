@@ -1,4 +1,4 @@
-import { Portfolio } from "@/models/Portfolio";
+import { Portfolio } from "@/models/portfolio";
 import { axiosInstance } from "@/services/axiosConfig";
 
 export class PortfolioService {

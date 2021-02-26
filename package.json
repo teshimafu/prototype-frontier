@@ -1,0 +1,20 @@
+{
+  "name": "prototype_frontier",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "npm --prefix ./elementary-portfolio-list-app install ./elementary-portfolio-list-app && cd ./elementary-portfolio-list-app && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teshimafu/prototype-frontier.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teshimafu/prototype-frontier/issues"
+  },
+  "engines": {
+    "node": "12.16.3"
+  }
+}

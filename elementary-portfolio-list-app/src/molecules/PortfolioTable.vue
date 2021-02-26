@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Portfolio } from "../models/portfolio2";
+import { Portfolio } from "../models/portfolio";
 import router from "../router";
 
 export default defineComponent({

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { Portfolio } from "../models/portfolio";
+import { Portfolio } from "../models/portfolio2";
 import PortfolioTable from "@/molecules/PortfolioTable.vue";
 import { PortfolioService } from "../services/portolioService";
 

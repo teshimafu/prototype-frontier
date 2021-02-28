@@ -1,5 +1,5 @@
 <template>
-  <h2>{{ state.message }}</h2>
+  <div>{{ state.message }}</div>
 </template>
 
 <script lang="ts">

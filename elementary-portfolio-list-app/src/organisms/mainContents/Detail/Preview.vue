@@ -49,3 +49,25 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.title {
+  font-size: x-large;
+}
+
+.date {
+  margin: 0.5em;
+}
+
+.author {
+  margin: 0.5em;
+}
+
+.abstruct {
+  margin: 10px;
+  padding: 5px;
+  text-align: left;
+  border: solid 1px gray;
+  border-radius: 10px;
+}
+</style>

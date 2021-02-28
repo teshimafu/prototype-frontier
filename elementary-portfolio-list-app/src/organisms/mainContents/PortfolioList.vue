@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { useRouter } from "vue-router";
 import { Portfolio } from "../../models/portfolio";
 import PortfolioTable from "./List/PortfolioTable.vue";
 import PortfolioService from "../../services/portolioService.vue";
@@ -19,9 +20,18 @@ export default defineComponent({
     const state = reactive<{ portfolioList: Portfolio[] }>({
       portfolioList: []
     });
-    PortfolioService.getPortfolioList().then(res => {
-      state.portfolioList = res;
-    });
+    PortfolioService.getPortfolioList()
+      .then(res => {
+        state.portfolioList = res;
+      })
+      .catch(e => {
+        const router = useRouter();
+        if (e.response.status == 404) {
+          router.push("/error/notfound");
+          return;
+        }
+        router.push("/error/loaderror");
+      });
     return { state };
   }
 });

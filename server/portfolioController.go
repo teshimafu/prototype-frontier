@@ -1,10 +1,12 @@
 package server
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 func getPortfolioHandler(c *gin.Context) {
@@ -15,6 +17,10 @@ func getPortfolioHandler(c *gin.Context) {
 	}
 	portfolio, err := getPortfolio(id)
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(404, gin.H{"message": "データが見つかりませんでした"})
+			return
+		}
 		c.JSON(500, gin.H{"message": "DB接続エラー"})
 		return
 	}

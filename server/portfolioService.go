@@ -1,6 +1,8 @@
 package server
 
-import "time"
+import (
+	"time"
+)
 
 func getPortfolio(ID int) (Portfolio, error) {
 	db, err := gormConnect()
@@ -11,7 +13,10 @@ func getPortfolio(ID int) (Portfolio, error) {
 
 	portfolio := Portfolio{}
 
-	db.Find(&portfolio, ID)
+	err = db.Find(&portfolio, ID).Error
+	if err != nil {
+		return Portfolio{}, err
+	}
 	return portfolio, nil
 }
 

@@ -22,42 +22,29 @@ export default defineComponent({
     Loading,
     Preview
   },
-  setup(): Contect {
+  setup(): Contect | undefined {
     const route = useRoute();
     const router = useRouter();
     const id = Number(route.params.id);
     if (isNaN(id)) {
       router.push("/");
+      return;
     }
     const state = reactive<{ portfolio: Portfolio | null }>({
       portfolio: null
     });
-    PortfolioService.getPortfolio(id).then(r => {
-      state.portfolio = r;
-    });
+    PortfolioService.getPortfolio(id)
+      .then(r => {
+        state.portfolio = r;
+      })
+      .catch(e => {
+        if (e.response.status == 404) {
+          router.push("/error/notfound");
+          return;
+        }
+        router.push("/error/loaderror");
+      });
     return { state };
   }
 });
 </script>
-
-<style scoped>
-.title {
-  font-size: x-large;
-}
-
-.date {
-  margin: 0.5em;
-}
-
-.author {
-  margin: 0.5em;
-}
-
-.abstruct {
-  margin: 10px;
-  padding: 5px;
-  text-align: left;
-  border: solid 1px gray;
-  border-radius: 10px;
-}
-</style>

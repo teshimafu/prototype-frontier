@@ -35,6 +35,9 @@ func Server() {
 			portfolioEngine.POST("", postPortfolioHandler)
 		}
 	}
+	engine.NoRoute(func(c *gin.Context) {
+		c.File("./static/index.html")
+	})
 	port := os.Getenv("PORT")
 
 	if port == "" {

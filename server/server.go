@@ -30,6 +30,7 @@ func Server() {
 	{
 		portfolioEngine := apiEngine.Group("/portfolio")
 		{
+			portfolioEngine.GET("/:id", getPortfolioHandler)
 			portfolioEngine.GET("", getPortfolioListHandler)
 			portfolioEngine.POST("", postPortfolioHandler)
 		}

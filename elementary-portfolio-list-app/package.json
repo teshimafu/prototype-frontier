@@ -1,5 +1,5 @@
 {
-  "name": "elementary-portfolio-list-app",
+  "name": "prototype-frontier",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,11 +12,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "marked": "^2.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/marked": "^1.2.2",
     "@types/mocha": "^5.2.4",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",

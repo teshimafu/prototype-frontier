@@ -2,9 +2,24 @@ package server
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
+
+func getPortfolioHandler(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "parse param error"})
+		return
+	}
+	portfolio, err := getPortfolio(id)
+	if err != nil {
+		c.JSON(500, gin.H{"message": "DB接続エラー"})
+		return
+	}
+	c.JSON(200, portfolio)
+}
 
 func getPortfolioListHandler(c *gin.Context) {
 	portfolioList, err := getPortfolioList()

@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { Portfolio } from "../models/portfolio";
-import PortfolioTable from "@/molecules/PortfolioTable.vue";
-import { PortfolioService } from "../services/portolioService";
+import { Portfolio } from "../../models/portfolio";
+import PortfolioTable from "./List/PortfolioTable.vue";
+import PortfolioService from "../../services/portolioService.vue";
 
 export default defineComponent({
   name: "PortfolioList",

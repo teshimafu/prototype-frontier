@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <router-view />
+    <MainContent />
     <Footer />
   </div>
 </template>
@@ -10,10 +10,12 @@
 import { defineComponent } from "vue";
 import Header from "@/organisms/Header.vue";
 import Footer from "@/organisms/Footer.vue";
+import MainContent from "@/organisms/MainContent.vue";
 export default defineComponent({
   components: {
     Header,
-    Footer
+    Footer,
+    MainContent
   }
 });
 </script>

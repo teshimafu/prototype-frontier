@@ -1,6 +1,24 @@
 package server
 
-import "time"
+import (
+	"time"
+)
+
+func getPortfolio(ID int) (Portfolio, error) {
+	db, err := gormConnect()
+	if err != nil {
+		return Portfolio{}, err
+	}
+	defer db.Close()
+
+	portfolio := Portfolio{}
+
+	err = db.Find(&portfolio, ID).Error
+	if err != nil {
+		return Portfolio{}, err
+	}
+	return portfolio, nil
+}
 
 func getPortfolioList() ([](Portfolio), error) {
 	db, err := gormConnect()

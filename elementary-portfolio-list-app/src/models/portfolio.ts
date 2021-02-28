@@ -4,6 +4,6 @@ export interface Portfolio {
   author: string;
   created_at: string;
   abstruct: string;
-  url: string;
+  link: string;
   source: string;
 }

@@ -17,6 +17,7 @@ export default defineComponent({
     PortfolioTable
   },
   setup() {
+    const router = useRouter();
     const state = reactive<{ portfolioList: Portfolio[] }>({
       portfolioList: []
     });
@@ -25,8 +26,7 @@ export default defineComponent({
         state.portfolioList = res;
       })
       .catch(e => {
-        const router = useRouter();
-        if (e.response.status == 404) {
+        if (e.response?.status == 404) {
           router.push("/error/notfound");
           return;
         }

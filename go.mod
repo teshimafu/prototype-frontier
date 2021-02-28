@@ -1,6 +1,7 @@
 module gin_mod
 
-go 1.15
+// +heroku goVersion go1.12
+go 1.12
 
 replace local.packages/server => ./server
 

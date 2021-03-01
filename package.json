@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "npm --prefix ./elementary-portfolio-list-app install ./elementary-portfolio-list-app && cd ./elementary-portfolio-list-app && npm run build"
+    "postinstall": "npm --prefix ./prototype-frontier-front install ./prototype-frontier-front && cd ./prototype-frontier-front && npm run build"
   },
   "repository": {
     "type": "git",

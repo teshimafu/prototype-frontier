@@ -1,5 +1,5 @@
 <template>
-  <div v-if="state">
+  <div>
     <div class="title">{{ state.portfolio.title }}</div>
     <div>
       <span class="date">作成日:{{ state.portfolio.createDate }}</span>
@@ -13,21 +13,14 @@
       ソースコード:
       <a :href="state.portfolio.source">{{ state.portfolio.source }}</a>
     </div>
-    <div class="abstruct" v-html="state.portfolio.abstruct"></div>
+    <div class="abstruct">{{ state.portfolio.abstruct }}</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
-import marked from "marked";
 import { Portfolio } from "../../../models/portfolio";
-
-interface Contect {
-  state: {
-    portfolio: Portfolio;
-  };
-}
 
 export default defineComponent({
   props: {
@@ -44,7 +37,6 @@ export default defineComponent({
     const state: {
       portfolio: Portfolio;
     } = { portfolio: props.portfolio };
-    state.portfolio.abstruct = marked(state.portfolio.abstruct);
     return { state };
   }
 });

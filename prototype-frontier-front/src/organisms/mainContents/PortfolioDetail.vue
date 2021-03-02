@@ -1,5 +1,6 @@
 <template>
-  <Preview v-if="state.portfolio" v-bind:portfolio="state.portfolio" />
+  <Edit v-if="state.isEdit" :inputPortfolio="state.portfolio" />
+  <Preview v-else-if="state.portfolio" :inputPortfolio="state.portfolio" />
   <Loading v-else />
 </template>
 
@@ -8,31 +9,47 @@ import { defineComponent, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Loading from "@/organisms/Loading.vue";
 import Preview from "./Detail/Preview.vue";
-import { Portfolio } from "../../models/portfolio";
+import Edit from "./Detail/Edit.vue";
+import { InputPortfolio } from "../../models/portfolio";
 import PortfolioService from "../../services/portolioService.vue";
 
-interface Contect {
-  state: {
-    portfolio: Portfolio | null;
-  };
+interface Content {
+  isEdit: boolean;
+  portfolio: InputPortfolio | null;
 }
+
+const initPortfolio: InputPortfolio = {
+  title: "",
+  author: "",
+  abstruct: "",
+  source: "",
+  link: "",
+  readme: ""
+};
 
 export default defineComponent({
   components: {
     Loading,
+    Edit,
     Preview
   },
-  setup(): Contect | undefined {
+  setup(): { state: Content } | undefined {
     const route = useRoute();
     const router = useRouter();
-    const id = Number(route.params.id);
-    if (isNaN(id)) {
-      router.push("/");
-      return;
-    }
-    const state = reactive<{ portfolio: Portfolio | null }>({
+    const state = reactive<Content>({
+      isEdit: false,
       portfolio: null
     });
+    if ("new" === route.params.id) {
+      state.portfolio = initPortfolio;
+      state.isEdit = true;
+      return { state };
+    }
+    const id = Number(route.params.id);
+    if (isNaN(id)) {
+      router.push("/error/notfound");
+      return;
+    }
     PortfolioService.getPortfolio(id)
       .then(r => {
         state.portfolio = r;
@@ -40,9 +57,9 @@ export default defineComponent({
       .catch(e => {
         if (e.response?.status == 404) {
           router.push("/error/notfound");
-          return;
+        } else {
+          router.push("/error/loaderror");
         }
-        router.push("/error/loaderror");
       });
     return { state };
   }

@@ -27,6 +27,11 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: calc(100vh - 16px);
+  position: relative;
+  padding-top: 70px;
+  padding-bottom: calc(1em);
+  box-sizing: border-box;
 }
 
 #nav {

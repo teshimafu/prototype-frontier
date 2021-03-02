@@ -7,8 +7,13 @@
 .footer {
   background-color: black;
   color: white;
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 #copylight {
   font-size: small;
+  margin: auto;
 }
 </style>

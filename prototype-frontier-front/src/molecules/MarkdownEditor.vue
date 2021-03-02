@@ -20,7 +20,7 @@
           </td>
           <td>
             <div class="preview">
-              <span v-html="compiledMarkdown"></span>
+              <MarkdownPreview :text="text" />
             </div>
           </td>
         </tr>
@@ -29,24 +29,19 @@
   </form>
 </template>
 <script lang="ts">
-import marked from "marked";
 import { defineComponent } from "vue";
+import MarkdownPreview from "@/atoms/MarkdownPreview.vue";
 
 export default defineComponent({
+  components: { MarkdownPreview },
   props: {
-    markdownText: String
+    markdownText: { type: String, required: true }
   },
   data() {
     return { text: this.markdownText };
   },
-  computed: {
-    compiledMarkdown() {
-      this.returnText();
-      return marked(this.text);
-    }
-  },
-  methods: {
-    returnText() {
+  watch: {
+    text: function() {
       this.$emit("returnText", this.text);
     }
   }

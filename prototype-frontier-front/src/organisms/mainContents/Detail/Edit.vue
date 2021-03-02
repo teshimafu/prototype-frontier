@@ -42,14 +42,11 @@ export default defineComponent({
     const state: {
       portfolio: InputPortfolio;
     } = { portfolio: props.inputPortfolio };
-    return { state };
-  },
-  methods: {
-    setReadme(text: string) {
-      if (this.state) {
-        this.state.portfolio.readme = text;
-      }
-    }
+
+    const setReadme = function(text: string) {
+      state.portfolio.readme = text;
+    };
+    return { state, setReadme };
   }
 });
 </script>

@@ -14,6 +14,7 @@
       <a :href="state.portfolio.source">{{ state.portfolio.source }}</a>
     </div>
     <div class="abstruct">{{ state.portfolio.abstruct }}</div>
+    <MarkdownPreview :text="state.portfolio.readme" />
   </div>
 </template>
 
@@ -21,22 +22,27 @@
 import { defineComponent, PropType } from "vue";
 import { useRouter } from "vue-router";
 import { Portfolio } from "../../../models/portfolio";
+import MarkdownPreview from "@/atoms/MarkdownPreview.vue";
 
 export default defineComponent({
+  components: { MarkdownPreview },
   props: {
-    portfolio: {
+    inputPortfolio: {
       type: Object as PropType<Portfolio>
     }
   },
   setup(props) {
-    if (!props.portfolio) {
+    if (!props.inputPortfolio) {
       const router = useRouter();
-      router.push("/error");
+      router.push({ name: "NotFoundError" });
       return {};
     }
     const state: {
       portfolio: Portfolio;
-    } = { portfolio: props.portfolio };
+    } = { portfolio: props.inputPortfolio };
+    if (state.portfolio.readme === undefined) {
+      state.portfolio.readme = "";
+    }
     return { state };
   }
 });

@@ -1,6 +1,8 @@
 <template>
   <div class="header">
-    <h1 id="title">Prototype Frontier</h1>
+    <h1 id="title">
+      <router-link to="/">Prototype Frontier</router-link>
+    </h1>
   </div>
 </template>
 <style scoped>

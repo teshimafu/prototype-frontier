@@ -47,7 +47,7 @@ export default defineComponent({
     }
     const id = Number(route.params.id);
     if (isNaN(id)) {
-      router.push("/error/notfound");
+      router.push({ name: "NotFoundError" });
       return;
     }
     PortfolioService.getPortfolio(id)
@@ -56,9 +56,9 @@ export default defineComponent({
       })
       .catch(e => {
         if (e.response?.status == 404) {
-          router.push("/error/notfound");
+          router.push({ name: "NotFoundError" });
         } else {
-          router.push("/error/loaderror");
+          router.push({ name: "LoadError" });
         }
       });
     return { state };

@@ -6,13 +6,13 @@ import marked from "marked";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  //   props: {
-  //     text: String
-  //   },
-  //   computed: {
-  //     toMarkdown() {
-  //       return marked(this.text ?? "");
-  //     }
-  //   }
+  props: {
+    text: { type: String, required: true }
+  },
+  computed: {
+    toMarkdown(): string {
+      return marked(this.text);
+    }
+  }
 });
 </script>

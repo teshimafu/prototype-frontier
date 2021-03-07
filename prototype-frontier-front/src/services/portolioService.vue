@@ -3,11 +3,14 @@ import { Portfolio, InputPortfolio } from "../models/portfolio";
 import { axiosInstance } from "../services/axiosConfig";
 
 export default class PortfolioService {
+  private static PATH = "/api/portfolios" as const;
   /**
    * getPortfolio
    */
   public static getPortfolio = async (id: number): Promise<Portfolio> => {
-    const { data } = await axiosInstance.get<Portfolio>("/api/portfolio/" + id);
+    const { data } = await axiosInstance.get<Portfolio>(
+      PortfolioService.PATH + "/" + id
+    );
     return data;
   };
 
@@ -15,22 +18,37 @@ export default class PortfolioService {
    * getPortfolioList
    */
   public static getPortfolioList = async (): Promise<Portfolio[]> => {
-    const { data } = await axiosInstance.get<Portfolio[]>("/api/portfolio");
+    const { data } = await axiosInstance.get<Portfolio[]>(
+      PortfolioService.PATH
+    );
     return data;
   };
 
   /**
-   *postPortfolio
+   * postPortfolio
    */
   public static postPortfolio = async (portfolio: InputPortfolio) => {
-    return await axiosInstance.post<Portfolio>("/api/portfolio", portfolio);
+    return await axiosInstance.post<Portfolio>(
+      PortfolioService.PATH,
+      portfolio
+    );
   };
 
   /**
-   *putPortfolio
+   * putPortfolio
    */
-  public static putPortfolio = async (portfolio: Portfolio) => {
-    return await axiosInstance.put<Portfolio>("/api/portfolio", portfolio);
+  public static putPortfolio = async (id: string, portfolio: Portfolio) => {
+    return await axiosInstance.put<Portfolio>(
+      PortfolioService.PATH + "/" + id,
+      portfolio
+    );
+  };
+
+  /**
+   * deletePortfolio
+   */
+  public static deletePortfolio = async (id: string) => {
+    await axiosInstance.delete(PortfolioService.PATH + "/" + id);
   };
 }
 </script>

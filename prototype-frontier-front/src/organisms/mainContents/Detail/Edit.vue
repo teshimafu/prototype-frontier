@@ -29,13 +29,6 @@
           @model="setInputValue('source', $event)"
         />
       </li>
-      <li>
-        <InputUnit
-          :title="'キーワード'"
-          :input="state.portfolio.abstruct"
-          @model="setInputValue('abstruct', $event)"
-        />
-      </li>
     </ul>
     <div>
       <div>詳細説明</div>

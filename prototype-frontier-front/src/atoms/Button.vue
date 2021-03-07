@@ -44,4 +44,10 @@ export default defineComponent({
   background-color: #28a745;
   border-color: #28a745;
 }
+
+.danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
 </style>

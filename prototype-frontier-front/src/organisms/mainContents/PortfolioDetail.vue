@@ -8,12 +8,13 @@
     <div v-else-if="state.portfolio">
       <Preview :inputPortfolio="state.portfolio" />
       <Button @click="editPortfolio" :text="'編集'" />
+      <Button @click="deletePortfolio" :type="'danger'" :text="'削除'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watch } from "vue";
+import { defineComponent, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Button from "@/atoms/Button.vue";
 import Loading from "@/organisms/Loading.vue";
@@ -44,10 +45,12 @@ export default defineComponent({
     Edit,
     Preview
   },
-  setup():
-    | { state: Content; editPortfolio: () => void; updatePortfolio: () => void }
-    | undefined {
-    console.log("setup");
+  setup(): {
+    state: Content;
+    editPortfolio?: () => void;
+    updatePortfolio?: () => void;
+    deletePortfolio?: () => void;
+  } {
     const route = useRoute();
     const router = useRouter();
     const state = reactive<Content>({
@@ -70,7 +73,10 @@ export default defineComponent({
           router.replace("/detail/" + r.data.id);
         });
       } else {
-        PortfolioService.putPortfolio(state.portfolio as Portfolio).then(r => {
+        PortfolioService.putPortfolio(
+          route.params.id as string,
+          state.portfolio as Portfolio
+        ).then(r => {
           state.portfolio = r.data;
           state.isEdit = false;
           state.isLoading = false;
@@ -79,16 +85,25 @@ export default defineComponent({
       state.isLoading = true;
     };
 
+    const deletePortfolio = () => {
+      PortfolioService.deletePortfolio(route.params.id as string).then(() => {
+        state.isEdit = false;
+        state.isLoading = false;
+        router.replace({ name: "PortolioList" });
+      });
+      state.isLoading = true;
+    };
+
     if ("new" === route.params.id) {
       state.portfolio = JSON.parse(JSON.stringify(initPortfolio));
       state.isEdit = true;
       state.isLoading = false;
-      return { state, editPortfolio, updatePortfolio };
+      return { state, editPortfolio, updatePortfolio, deletePortfolio };
     }
     const id = Number(route.params.id);
     if (isNaN(id)) {
       router.push({ name: "NotFoundError" });
-      return;
+      return { state };
     }
     PortfolioService.getPortfolio(id)
       .then(r => {
@@ -103,10 +118,9 @@ export default defineComponent({
         }
       });
 
-    return { state, editPortfolio, updatePortfolio };
+    return { state, editPortfolio, updatePortfolio, deletePortfolio };
   },
   beforeRouteUpdate(to, from, next) {
-    console.log("hello");
     next();
   }
 });

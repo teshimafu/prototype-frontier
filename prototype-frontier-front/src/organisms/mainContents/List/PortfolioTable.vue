@@ -18,7 +18,7 @@
         <th>{{ data.id }}</th>
         <td>{{ data.title }}</td>
         <td>{{ data.author }}</td>
-        <td>{{ data.created_at }}</td>
+        <td>{{ showDate(data.created_at) }}</td>
       </tr>
     </tbody>
   </table>
@@ -37,6 +37,12 @@ export default defineComponent({
   methods: {
     onClickTitle(id: number) {
       router.push({ path: `/detail/${id}` });
+    },
+    showDate(text: string) {
+      if (!text.includes("T") || text.length < 19) return "";
+      const date = text.split("T")[0];
+      const time = text.split("T")[1].substring(0, 8);
+      return date + " " + time;
     }
   }
 });

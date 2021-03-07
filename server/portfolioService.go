@@ -29,7 +29,7 @@ func getPortfolioList() ([](Portfolio), error) {
 
 	portfolioList := [](Portfolio){}
 
-	db.Find(&portfolioList)
+	db.Order("created_at desc").Find(&portfolioList)
 	return portfolioList, nil
 }
 
@@ -46,7 +46,7 @@ func postPortfolio(p *Portfolio) (Portfolio, error) {
 	return *p, nil
 }
 
-func putPortfolio(p *Portfolio) (Portfolio, error) {
+func putPortfolio(id int, p *Portfolio) (Portfolio, error) {
 
 	db, err := gormConnect()
 	if err != nil {
@@ -55,6 +55,18 @@ func putPortfolio(p *Portfolio) (Portfolio, error) {
 	defer db.Close()
 
 	p.UpdatedAt = time.Now()
+	p.ID = id
 	db.Save(p)
 	return *p, nil
+}
+
+func deletePortfolio(id int) error {
+
+	db, err := gormConnect()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	err = db.Delete(&Portfolio{}, id).Error
+	return err
 }

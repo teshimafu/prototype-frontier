@@ -24,7 +24,6 @@ export default defineComponent({
 <style scoped>
 .form-control {
   display: inline-block;
-  height: calc(2.25rem+2px);
   padding: 0.375rem 0.75rem;
   font-weight: 400;
   border: 1px solid #ced4da;

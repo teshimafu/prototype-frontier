@@ -1,21 +1,31 @@
 <template>
-  <Edit v-if="state.isEdit" :inputPortfolio="state.portfolio" />
-  <Preview v-else-if="state.portfolio" :inputPortfolio="state.portfolio" />
-  <Loading v-else />
+  <div>
+    <Loading v-if="state.isLoading" />
+    <div v-else-if="state.isEdit">
+      <Edit :inputPortfolio="state.portfolio" />
+      <Button @click="updatePortfolio" :text="'更新'" />
+    </div>
+    <div v-else-if="state.portfolio">
+      <Preview :inputPortfolio="state.portfolio" />
+      <Button @click="editPortfolio" :text="'編集'" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import Button from "@/atoms/Button.vue";
 import Loading from "@/organisms/Loading.vue";
 import Preview from "./Detail/Preview.vue";
 import Edit from "./Detail/Edit.vue";
-import { InputPortfolio } from "../../models/portfolio";
+import { InputPortfolio, Portfolio } from "../../models/portfolio";
 import PortfolioService from "../../services/portolioService.vue";
 
 interface Content {
   isEdit: boolean;
-  portfolio: InputPortfolio | null;
+  isLoading: boolean;
+  portfolio: InputPortfolio;
 }
 
 const initPortfolio: InputPortfolio = {
@@ -29,21 +39,51 @@ const initPortfolio: InputPortfolio = {
 
 export default defineComponent({
   components: {
+    Button,
     Loading,
     Edit,
     Preview
   },
-  setup(): { state: Content } | undefined {
+  setup():
+    | { state: Content; editPortfolio: () => void; updatePortfolio: () => void }
+    | undefined {
+    console.log("setup");
     const route = useRoute();
     const router = useRouter();
     const state = reactive<Content>({
       isEdit: false,
-      portfolio: null
+      isLoading: true,
+      portfolio: initPortfolio
     });
-    if ("new" === route.params.id) {
-      state.portfolio = initPortfolio;
+
+    //methods
+    const editPortfolio = () => {
       state.isEdit = true;
-      return { state };
+    };
+
+    const updatePortfolio = () => {
+      if ("new" === route.params.id) {
+        PortfolioService.postPortfolio(state.portfolio).then(r => {
+          state.portfolio = r.data;
+          state.isEdit = false;
+          state.isLoading = false;
+          router.replace("/detail/" + r.data.id);
+        });
+      } else {
+        PortfolioService.putPortfolio(state.portfolio as Portfolio).then(r => {
+          state.portfolio = r.data;
+          state.isEdit = false;
+          state.isLoading = false;
+        });
+      }
+      state.isLoading = true;
+    };
+
+    if ("new" === route.params.id) {
+      state.portfolio = JSON.parse(JSON.stringify(initPortfolio));
+      state.isEdit = true;
+      state.isLoading = false;
+      return { state, editPortfolio, updatePortfolio };
     }
     const id = Number(route.params.id);
     if (isNaN(id)) {
@@ -53,6 +93,7 @@ export default defineComponent({
     PortfolioService.getPortfolio(id)
       .then(r => {
         state.portfolio = r;
+        state.isLoading = false;
       })
       .catch(e => {
         if (e.response?.status == 404) {
@@ -61,7 +102,12 @@ export default defineComponent({
           router.push({ name: "LoadError" });
         }
       });
-    return { state };
+
+    return { state, editPortfolio, updatePortfolio };
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log("hello");
+    next();
   }
 });
 </script>

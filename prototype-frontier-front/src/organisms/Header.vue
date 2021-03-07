@@ -7,7 +7,7 @@
 </template>
 <style scoped>
 .header {
-  background-color: aquamarine;
+  background-color: #d7c447;
   height: 70px;
   width: 100%;
   position: absolute;

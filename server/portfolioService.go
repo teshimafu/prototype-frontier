@@ -33,14 +33,28 @@ func getPortfolioList() ([](Portfolio), error) {
 	return portfolioList, nil
 }
 
-func postPortfolio(p *Portfolio) error {
+func postPortfolio(p *Portfolio) (Portfolio, error) {
+
 	db, err := gormConnect()
 	if err != nil {
-		return err
+		return Portfolio{}, err
 	}
 	defer db.Close()
 
 	p.CreatedAt = time.Now()
 	db.Create(p)
-	return nil
+	return *p, nil
+}
+
+func putPortfolio(p *Portfolio) (Portfolio, error) {
+
+	db, err := gormConnect()
+	if err != nil {
+		return Portfolio{}, err
+	}
+	defer db.Close()
+
+	p.UpdatedAt = time.Now()
+	db.Save(p)
+	return *p, nil
 }

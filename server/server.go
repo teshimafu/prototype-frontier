@@ -33,6 +33,7 @@ func Server() {
 			portfolioEngine.GET("/:id", getPortfolioHandler)
 			portfolioEngine.GET("", getPortfolioListHandler)
 			portfolioEngine.POST("", postPortfolioHandler)
+			portfolioEngine.PUT("", putPortfolioHandler)
 		}
 	}
 	engine.NoRoute(func(c *gin.Context) {

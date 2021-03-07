@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Portfolio } from "../models/portfolio";
+import { Portfolio, InputPortfolio } from "../models/portfolio";
 import { axiosInstance } from "../services/axiosConfig";
 
 export default class PortfolioService {
@@ -20,10 +20,17 @@ export default class PortfolioService {
   };
 
   /**
-   *postPortfolioList
+   *postPortfolio
    */
-  public static postPortfolio = async (portfolio: Portfolio) => {
-    await axiosInstance.post("/api/portfolio", portfolio);
+  public static postPortfolio = async (portfolio: InputPortfolio) => {
+    return await axiosInstance.post<Portfolio>("/api/portfolio", portfolio);
+  };
+
+  /**
+   *putPortfolio
+   */
+  public static putPortfolio = async (portfolio: Portfolio) => {
+    return await axiosInstance.put<Portfolio>("/api/portfolio", portfolio);
   };
 }
 </script>

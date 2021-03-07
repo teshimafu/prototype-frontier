@@ -14,7 +14,9 @@
       <a :href="state.portfolio.source">{{ state.portfolio.source }}</a>
     </div>
     <div class="abstruct">{{ state.portfolio.abstruct }}</div>
-    <MarkdownPreview :text="state.portfolio.readme" />
+    <div class="readme">
+      <MarkdownPreview :text="state.portfolio.readme" />
+    </div>
   </div>
 </template>
 
@@ -51,17 +53,27 @@ export default defineComponent({
 <style scoped>
 .title {
   font-size: x-large;
-}
-
-.date {
-  margin: 0.5em;
+  margin: 1em;
 }
 
 .author {
   margin: 0.5em;
 }
+.date {
+  margin: 0.5em;
+}
 
 .abstruct {
+  margin: 0.5em;
+  /* margin: 10px;
+  padding: 5px;
+  text-align: left;
+  border: solid 1px gray;
+  border-radius: 10px; */
+}
+
+.readme {
+  margin: 0.5em;
   margin: 10px;
   padding: 5px;
   text-align: left;

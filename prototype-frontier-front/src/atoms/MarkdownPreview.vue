@@ -1,5 +1,5 @@
 <template>
-  <span v-html="toMarkdown"></span>
+  <span class="preview" v-html="toMarkdown"></span>
 </template>
 <script lang="ts">
 import marked from "marked";

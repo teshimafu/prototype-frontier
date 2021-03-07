@@ -1,3 +1,5 @@
+import { PartiallyPartial } from "./customTSlib";
+
 export interface Portfolio {
   id: number;
   title: string;
@@ -6,4 +8,6 @@ export interface Portfolio {
   abstruct: string;
   link: string;
   source: string;
+  readme: string;
 }
+export type InputPortfolio = PartiallyPartial<Portfolio, "id" | "created_at">;

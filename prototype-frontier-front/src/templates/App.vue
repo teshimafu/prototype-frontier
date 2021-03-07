@@ -27,18 +27,11 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  min-height: calc(100vh);
+  position: relative;
+  padding-top: 70px;
+  padding-bottom: calc(1em);
+  box-sizing: border-box;
+  /* border: 5px solid #d7c447; */
 }
 </style>

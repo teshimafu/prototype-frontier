@@ -28,11 +28,13 @@ func Server() {
 	engine.Use(static.Serve("/", static.LocalFile("./static", false)))
 	apiEngine := engine.Group("/api")
 	{
-		portfolioEngine := apiEngine.Group("/portfolio")
+		portfolioEngine := apiEngine.Group("/portfolios")
 		{
 			portfolioEngine.GET("/:id", getPortfolioHandler)
 			portfolioEngine.GET("", getPortfolioListHandler)
 			portfolioEngine.POST("", postPortfolioHandler)
+			portfolioEngine.PUT("/:id", putPortfolioHandler)
+			portfolioEngine.DELETE("/:id", deletePortfolioHandler)
 		}
 	}
 	engine.NoRoute(func(c *gin.Context) {

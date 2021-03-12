@@ -32,6 +32,5 @@ export default defineComponent({
   padding-top: 70px;
   padding-bottom: calc(1em);
   box-sizing: border-box;
-  /* border: 5px solid #d7c447; */
 }
 </style>

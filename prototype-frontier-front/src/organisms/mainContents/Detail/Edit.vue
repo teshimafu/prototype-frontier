@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!state.isLoading">
     <ul class="editor-box">
       <li>
         <InputUnit
@@ -41,11 +41,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, reactive } from "vue";
 import { useRouter } from "vue-router";
 import InputUnit from "@/molecules/InputUnit.vue";
 import MarkdownEditor from "@/molecules/MarkdownEditor.vue";
 import { InputPortfolio } from "../../../models/portfolio";
+import FirebaseService from "../../../services/firebaseService";
 export default defineComponent({
   components: {
     InputUnit,
@@ -55,14 +56,18 @@ export default defineComponent({
     inputPortfolio: Object as PropType<InputPortfolio>
   },
   setup(props) {
+    const router = useRouter();
+    const fs = FirebaseService.getInstance();
     if (!props.inputPortfolio) {
-      const router = useRouter();
       router.push({ name: "NotFoundError" });
       return {};
     }
-    const state: {
+    const state = reactive<{
       portfolio: InputPortfolio;
-    } = { portfolio: props.inputPortfolio };
+      isLoading: boolean;
+    }>({ portfolio: props.inputPortfolio, isLoading: true });
+
+    //methods
     const setReadme = function(text: string) {
       state.portfolio.readme = text;
     };
@@ -72,6 +77,17 @@ export default defineComponent({
     ) {
       state.portfolio[name] = text;
     };
+
+    fs.getDisplayName().then(displayName => {
+      if (!displayName) {
+        router.push({ name: "LoadError" });
+        return;
+      }
+      if (!state.portfolio.author) {
+        state.portfolio.author = displayName;
+      }
+      state.isLoading = false;
+    });
     return { state, setReadme, setInputValue };
   }
 });

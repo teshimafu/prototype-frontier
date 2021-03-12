@@ -24,6 +24,13 @@ func Server() {
 		config.AllowOrigins = []string{"*"}
 	}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE"}
+	config.AllowHeaders = []string{
+		"Access-Control-Allow-Headers",
+		"Content-Type",
+		"Content-Length",
+		"Accept-Encoding",
+		"X-CSRF-Token",
+		"Authorization"}
 	engine.Use(cors.New(config))
 	engine.Use(static.Serve("/", static.LocalFile("./static", false)))
 	apiEngine := engine.Group("/api")
@@ -32,9 +39,12 @@ func Server() {
 		{
 			portfolioEngine.GET("/:id", getPortfolioHandler)
 			portfolioEngine.GET("", getPortfolioListHandler)
-			portfolioEngine.POST("", postPortfolioHandler)
-			portfolioEngine.PUT("/:id", putPortfolioHandler)
-			portfolioEngine.DELETE("/:id", deletePortfolioHandler)
+			authGroup := portfolioEngine.Group("", authMiddleware())
+			{
+				authGroup.POST("", postPortfolioHandler)
+				authGroup.PUT("/:id", putPortfolioHandler)
+				authGroup.DELETE("/:id", deletePortfolioHandler)
+			}
 		}
 	}
 	engine.NoRoute(func(c *gin.Context) {

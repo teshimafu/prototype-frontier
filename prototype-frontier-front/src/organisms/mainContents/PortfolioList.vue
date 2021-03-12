@@ -4,7 +4,11 @@
       自分の作ったアプリケーションを投稿してみんなに見てもらいましょう<br />
       将来的にtwitterでランダムにアプリを投稿する機能も追加予定です
     </div>
-    <Button @click="createNewPortfolio" :text="'新規作品を投稿する'" />
+    <Button
+      v-if="state.isEditable"
+      @click="createNewPortfolio"
+      :text="'新規作品を投稿する'"
+    />
     <PortfolioTable :portfolioList="state.portfolioList" />
   </div>
 </template>
@@ -16,6 +20,7 @@ import Button from "@/atoms/Button.vue";
 import { Portfolio } from "../../models/portfolio";
 import PortfolioTable from "./List/PortfolioTable.vue";
 import PortfolioService from "../../services/portolioService.vue";
+import FirebaseService from "../../services/firebaseService";
 
 export default defineComponent({
   name: "PortfolioList",
@@ -25,12 +30,22 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const state = reactive<{ portfolioList: Portfolio[] }>({
-      portfolioList: []
-    });
+    const state = reactive<{ portfolioList: Portfolio[]; isEditable: boolean }>(
+      {
+        portfolioList: [],
+        isEditable: false
+      }
+    );
     const createNewPortfolio = () => {
       router.push("/detail/new");
     };
+    FirebaseService.getInstance()
+      .getUser()
+      .then(user => {
+        if (user) {
+          state.isEditable = true;
+        }
+      });
     PortfolioService.getPortfolioList()
       .then(res => {
         state.portfolioList = res;

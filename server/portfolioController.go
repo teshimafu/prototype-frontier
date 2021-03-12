@@ -42,7 +42,12 @@ func postPortfolioHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	uid, isExist := c.Get("AuthorizedUID")
+	if isExist == false {
+		c.JSON(500, gin.H{"message": "UID取得失敗"})
+		return
+	}
+	p.UID = uid.(string)
 	var portfolio, err = postPortfolio(&p)
 	if err != nil {
 		c.JSON(500, gin.H{"message": "DB接続エラー"})
@@ -63,6 +68,14 @@ func putPortfolioHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if uid, isExist := c.Get("AuthorizedUID"); isExist == false {
+		c.JSON(500, gin.H{"message": "UID取得失敗"})
+		return
+	} else if p.UID != "" && uid != p.UID {
+		c.JSON(401, gin.H{"message": "許可がありません"})
+		return
+	}
 	portfolio, err := putPortfolio(id, &p)
 	if err != nil {
 		c.JSON(500, gin.H{"message": "DB接続エラー"})
@@ -76,6 +89,22 @@ func deletePortfolioHandler(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "parse param error"})
+		return
+	}
+	portfolio, err := getPortfolio(id)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(404, gin.H{"message": "データが見つかりませんでした"})
+			return
+		}
+		c.JSON(500, gin.H{"message": "DB接続エラー"})
+		return
+	}
+	if uid, isExist := c.Get("AuthorizedUID"); isExist == false {
+		c.JSON(500, gin.H{"message": "UID取得失敗"})
+		return
+	} else if portfolio.UID != "" && uid != portfolio.UID {
+		c.JSON(401, gin.H{"message": "許可がありません"})
 		return
 	}
 	err = deletePortfolio(id)

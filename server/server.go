@@ -11,6 +11,7 @@ import (
 
 //Server is start server method
 func Server() {
+	createFireStoreJSON()
 	if err := migration(); err != nil {
 		panic("db connection error!")
 	}

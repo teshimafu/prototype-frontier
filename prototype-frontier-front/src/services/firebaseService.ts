@@ -29,7 +29,7 @@ export default class FirebaseService {
   }
 
   public async getUser(forceReflesh = false): Promise<firebase.User | null> {
-    if (!forceReflesh && this.user) {
+    if (forceReflesh && this.user) {
       return this.user;
     }
     return new Promise<firebase.User | null>(resolve => {

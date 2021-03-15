@@ -8,14 +8,16 @@
         <li v-if="state.user">
           <span class="menu">
             {{ state.user.displayName }}
-            <i class="arrow down"> </i>
+            <i class="arrow down"></i>
           </span>
           <ul>
-            <li><span class="submenu" @click="signout">サインアウト</span></li>
+            <li>
+              <span class="submenu" @click="signout">サインアウト</span>
+            </li>
           </ul>
         </li>
         <li v-else @click="signin">
-          <Button :text="'サインイン'" :type="'secondary'" :size="'small'" />
+          <Button id="signin" :text="'サインイン'" :type="'secondary'" :size="'small'" />
         </li>
       </ul>
     </nav>

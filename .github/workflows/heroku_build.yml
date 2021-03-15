@@ -1,8 +1,8 @@
 name: heroku build
 
 on:
-  push:
-    branches: [feature/*]
+  pull_request:
+    branches: [master]
 
 jobs:
   build:

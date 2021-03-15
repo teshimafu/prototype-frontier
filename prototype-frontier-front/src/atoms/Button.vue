@@ -1,27 +1,26 @@
 <template>
-  <button class="btn" :class="[type, size]">
-    {{ text }}
-  </button>
+  <button :id="id" class="btn" :class="[type, size]">{{ text }}</button>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
+    id: { type: String, default: "" },
     text: { type: String, default: "ボタン" },
     type: {
       type: String,
       default: "primary",
       validator: function(value: string) {
         return ["primary", "secondary", "success", "warning", "danger"].some(
-          v => v === value
+          v => v === value,
         );
-      }
+      },
     },
     size: {
       type: String,
-      default: ""
-    }
-  }
+      default: "",
+    },
+  },
 });
 </script>
 <style scoped>

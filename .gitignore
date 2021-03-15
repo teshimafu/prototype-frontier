@@ -2,3 +2,5 @@
 /db/data
 /node_modules
 .env
+prototype-frontier-firebase-adminsdk-*.json
+firebaseCredentials.json

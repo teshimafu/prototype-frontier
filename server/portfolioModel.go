@@ -11,6 +11,7 @@ type PortfolioList struct {
 type Portfolio struct {
 	ID        int       `gorm:"primary_key" json:"id"`
 	Title     string    `gorm:"type:varchar(256)" json:"title"`
+	UID       string    `gorm:"type:varchar(256)" json:"uid"`
 	Author    string    `gorm:"type:varchar(256)" json:"author"`
 	Abstruct  string    `gorm:"type:text" json:"abstruct"`
 	Readme    string    `gorm:"type:text" json:"readme"`

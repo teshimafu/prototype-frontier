@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Portfolio, InputPortfolio } from "../models/portfolio";
-import { axiosInstance } from "../services/axiosConfig";
+import { axiosInstance, axiosAuthInstance } from "../services/axiosConfig";
 
 export default class PortfolioService {
   private static PATH = "/api/portfolios" as const;
@@ -28,7 +28,7 @@ export default class PortfolioService {
    * postPortfolio
    */
   public static postPortfolio = async (portfolio: InputPortfolio) => {
-    return await axiosInstance.post<Portfolio>(
+    return await (await axiosAuthInstance).post<Portfolio>(
       PortfolioService.PATH,
       portfolio
     );
@@ -38,7 +38,7 @@ export default class PortfolioService {
    * putPortfolio
    */
   public static putPortfolio = async (id: string, portfolio: Portfolio) => {
-    return await axiosInstance.put<Portfolio>(
+    return await (await axiosAuthInstance).put<Portfolio>(
       PortfolioService.PATH + "/" + id,
       portfolio
     );
@@ -48,7 +48,7 @@ export default class PortfolioService {
    * deletePortfolio
    */
   public static deletePortfolio = async (id: string) => {
-    await axiosInstance.delete(PortfolioService.PATH + "/" + id);
+    await (await axiosAuthInstance).delete(PortfolioService.PATH + "/" + id);
   };
 }
 </script>

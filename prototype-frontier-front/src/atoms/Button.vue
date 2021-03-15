@@ -1,19 +1,24 @@
 <template>
-  <button class="btn" :class="type">{{ text }}</button>
+  <button :id="id" class="btn" :class="[type, size]">{{ text }}</button>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
+    id: { type: String, default: "" },
     text: { type: String, default: "ボタン" },
     type: {
       type: String,
       default: "primary",
       validator: function(value: string) {
-        return ["primary", "success", "warning", "danger"].some(
+        return ["primary", "secondary", "success", "warning", "danger"].some(
           v => v === value
         );
       }
+    },
+    size: {
+      type: String,
+      default: ""
     }
   }
 });
@@ -29,6 +34,13 @@ export default defineComponent({
   padding: 0.375rem 0.75rem;
   border-radius: 0.25rem;
 }
+.small {
+  font-size: small;
+  padding: 0.2rem 0.4rem;
+}
+.large {
+  font-size: large;
+}
 .btn:disabled {
   opacity: 0.65;
 }
@@ -37,6 +49,12 @@ export default defineComponent({
   color: #fff;
   background-color: #34b5ff;
   border-color: #34b5ff;
+}
+
+.secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
 .success {

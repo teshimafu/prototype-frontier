@@ -7,8 +7,13 @@
     </div>
     <div v-else-if="state.portfolio">
       <Preview :inputPortfolio="state.portfolio" />
-      <Button @click="editPortfolio" :text="'編集'" />
-      <Button @click="deletePortfolio" :type="'danger'" :text="'削除'" />
+      <Button v-if="state.isEditable" @click="editPortfolio" :text="'編集'" />
+      <Button
+        v-if="state.isEditable"
+        @click="deletePortfolio"
+        :type="'danger'"
+        :text="'削除'"
+      />
     </div>
   </div>
 </template>
@@ -22,10 +27,12 @@ import Preview from "./Detail/Preview.vue";
 import Edit from "./Detail/Edit.vue";
 import { InputPortfolio, Portfolio } from "../../models/portfolio";
 import PortfolioService from "../../services/portolioService.vue";
+import FirebaseService from "../../services/firebaseService";
 
 interface Content {
   isEdit: boolean;
   isLoading: boolean;
+  isEditable: boolean;
   portfolio: InputPortfolio;
 }
 
@@ -56,6 +63,7 @@ export default defineComponent({
     const state = reactive<Content>({
       isEdit: false,
       isLoading: true,
+      isEditable: false,
       portfolio: initPortfolio
     });
 
@@ -108,6 +116,14 @@ export default defineComponent({
     PortfolioService.getPortfolio(id)
       .then(r => {
         state.portfolio = r;
+        FirebaseService.getInstance()
+          .getUID()
+          .then(uid => {
+            if (uid) {
+              state.isEditable =
+                !state.portfolio.uid || uid === state.portfolio.uid;
+            }
+          });
         state.isLoading = false;
       })
       .catch(e => {

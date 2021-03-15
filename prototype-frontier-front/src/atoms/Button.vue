@@ -12,15 +12,15 @@ export default defineComponent({
       default: "primary",
       validator: function(value: string) {
         return ["primary", "secondary", "success", "warning", "danger"].some(
-          v => v === value,
+          v => v === value
         );
-      },
+      }
     },
     size: {
       type: String,
-      default: "",
-    },
-  },
+      default: ""
+    }
+  }
 });
 </script>
 <style scoped>

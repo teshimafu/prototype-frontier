@@ -36,13 +36,13 @@ import Button from "@/atoms/Button.vue";
 
 export default defineComponent({
   components: {
-    Button,
+    Button
   },
   setup() {
     const fs = firebaseService.getInstance();
     const state = reactive<{ user: firebase.User | null; isLoading: boolean }>({
       user: null,
-      isLoading: true,
+      isLoading: true
     });
     //methods
     const signin = () => {
@@ -64,7 +64,7 @@ export default defineComponent({
         state.isLoading = false;
       });
     return { state, signin, signout };
-  },
+  }
 });
 </script>
 

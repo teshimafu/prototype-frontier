@@ -2,7 +2,7 @@ name: heroku build
 
 on:
   push:
-    branches: [feature/*]
+    branches: [no/feature/*]
 
 jobs:
   build:

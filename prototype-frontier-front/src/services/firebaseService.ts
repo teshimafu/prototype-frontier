@@ -1,21 +1,11 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import firebaseConfig from "../../firebaseConfig.json";
 
 export default class FirebaseService {
   private static INSTANCE: FirebaseService;
   private user: firebase.User | null = null;
   constructor() {
-    const firebaseConfig = {
-      apiKey: process.env.VUE_APP_API_KEY,
-      authDomain: process.env.VUE_APP_PROJECT_ID + ".firebaseapp.com",
-      databaseURL:
-        "https://" + process.env.VUE_APP_PROJECT_ID + ".firebaseio.com",
-      projectId: process.env.VUE_APP_PROJECT_ID,
-      storageBucket: process.env.VUE_APP_PROJECT_ID + ".appspot.com",
-      messagingSenderId: process.env.VUE_APP_SENDER_ID,
-      appId: process.env.VUE_APP_APP_ID,
-      measurementId: "G-" + process.env.VUE_APP_MEASUREMENT_ID
-    };
     if (firebase.apps.length === 0) {
       firebase.initializeApp(firebaseConfig);
     }

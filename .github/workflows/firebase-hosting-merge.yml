@@ -11,11 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: create-json
+      - name: create-firebase.json
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "firebaseConfig.json"
           json: ${{ secrets.FIREBASE_CONFIG }}
+          dir: "prototype-frontier-front/"
+      - name: create-restAPIConfig.json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "restAPIConfig.json"
+          json: ${{ secrets.RESTAPI_CONFIG_STAGING }}
           dir: "prototype-frontier-front/"
       - run: npm ci --prefix ./prototype-frontier-front && npm run build --prefix ./prototype-frontier-front
       - uses: FirebaseExtended/action-hosting-deploy@v0

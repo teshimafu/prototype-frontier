@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
@@ -20,6 +21,9 @@ func Server() {
 	runnningMode := os.Getenv("GIN_MODE")
 	if runnningMode == "release" {
 		fmt.Println("release mode")
+		origins := strings.Split(os.Getenv("FRONTEND_DOMAINS"), ",")
+		config.AllowOrigins = origins
+
 	} else {
 		fmt.Println("debug mode")
 		config.AllowOrigins = []string{"*"}

@@ -1,11 +1,10 @@
 import axios, { AxiosInstance } from "axios";
+import restAPIConfig from "../../restAPIConfig.json";
 import FirebaseService from "./firebaseService";
 
-export const axiosInstance: AxiosInstance = axios.create(
-  process.env.NODE_ENV === "development"
-    ? { baseURL: "http://localhost:3000" }
-    : {}
-);
+export const axiosInstance: AxiosInstance = axios.create({
+  baseURL: restAPIConfig.baseURL
+});
 
 export const axiosAuthInstance: Promise<AxiosInstance> = new Promise(
   resolve => {
@@ -14,10 +13,7 @@ export const axiosAuthInstance: Promise<AxiosInstance> = new Promise(
       .then(token =>
         resolve(
           axios.create({
-            baseURL:
-              process.env.NODE_ENV === "development"
-                ? "http://localhost:3000"
-                : "",
+            baseURL: restAPIConfig.baseURL,
             headers: {
               Authorization: `Bearer ${token ?? ""}`
             }

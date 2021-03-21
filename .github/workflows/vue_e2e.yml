@@ -14,11 +14,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: create-firebase.json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "firebaseConfig.json"
+          json: ${{ secrets.FIREBASE_CONFIG }}
+          dir: "prototype-frontier-front/"
+      - name: create-restAPIConfig.json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "restAPIConfig.json"
+          json: ${{ secrets.RESTAPI_CONFIG_STAGING }}
+          dir: "prototype-frontier-front/"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci --prefix ./prototype-frontier-front
-      - run: npm run lint --prefix ./prototype-frontier-front
       - run: npm run build --if-present --prefix ./prototype-frontier-front
       - run: npm run test:e2e --prefix ./prototype-frontier-front -- --headless

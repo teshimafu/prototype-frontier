@@ -22,7 +22,7 @@ export const axiosAuthInstance: Promise<AxiosInstance> = new Promise<
       )
     );
 }).then(instance => {
-  instance.interceptors.request.use(
+  instance.interceptors.response.use(
     r => r,
     error => {
       if (error.response.status === 401) {

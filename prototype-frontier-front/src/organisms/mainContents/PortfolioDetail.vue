@@ -78,6 +78,7 @@ export default defineComponent({
           state.portfolio = r.data;
           state.isEdit = false;
           state.isLoading = false;
+          state.isEditable = true;
           router.replace("/detail/" + r.data.id);
         });
       } else {

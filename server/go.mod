@@ -10,6 +10,8 @@ require (
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/gocraft/dbr v0.0.0-20190714181702-8114670a83bd
+	github.com/gocraft/dbr/v2 v2.7.1
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.3.0
 	golang.org/x/oauth2 v0.0.0-20210220000619-9bb904979d93

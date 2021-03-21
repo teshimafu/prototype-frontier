@@ -9,14 +9,14 @@ type PortfolioList struct {
 
 //Portfolio is typeof Portfolio detail json
 type Portfolio struct {
-	ID        int       `gorm:"primary_key" json:"id"`
-	Title     string    `gorm:"type:varchar(256)" json:"title"`
-	UID       string    `gorm:"type:varchar(256)" json:"uid"`
-	Author    string    `gorm:"type:varchar(256)" json:"author"`
-	Abstruct  string    `gorm:"type:text" json:"abstruct"`
-	Readme    string    `gorm:"type:text" json:"readme"`
-	Source    string    `gorm:"type:varchar(1024)" json:"source"`
-	Link      string    `gorm:"type:varchar(1024)" json:"link"`
-	CreatedAt time.Time `gorm:"type:timestamp" json:"created_at"`
-	UpdatedAt time.Time `gorm:"type:timestamp" json:"updated_at"`
+	ID        int64     `db:"id" json:"id"`
+	Title     string    `db:"title" json:"title"`
+	UID       string    `db:"uid" json:"uid"`
+	Author    string    `db:"author" json:"author"`
+	Abstruct  string    `db:"abstruct" json:"abstruct"`
+	Readme    string    `db:"readme" json:"readme"`
+	Source    string    `db:"source" json:"source"`
+	Link      string    `db:"link" json:"link"`
+	CreatedAt time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 }

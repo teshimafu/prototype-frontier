@@ -13,7 +13,9 @@ import (
 //Server is start server method
 func Server() {
 	createFireStoreJSON()
-	if err := migration(); err != nil {
+
+	if _, err := gocraftConnection(); err != nil {
+		fmt.Printf("%+v\n", err)
 		panic("db connection error!")
 	}
 	engine := gin.Default()

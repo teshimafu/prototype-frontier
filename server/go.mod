@@ -12,8 +12,12 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gocraft/dbr v0.0.0-20190714181702-8114670a83bd
 	github.com/gocraft/dbr/v2 v2.7.1
+	github.com/golang/mock v1.5.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/joho/godotenv v1.3.0
+	github.com/lib/pq v1.3.0
+	github.com/stretchr/testify v1.6.1
 	golang.org/x/oauth2 v0.0.0-20210220000619-9bb904979d93
 	google.golang.org/api v0.41.0
+	gopkg.in/h2non/gock.v1 v1.0.16
 )

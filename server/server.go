@@ -6,14 +6,24 @@ import (
 	"strings"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
 //Server is start server method
 func Server() {
-	createFireStoreJSON()
 
+	var midd = &FirebaseMiddleware{}
+	engine := setup(midd)
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "3000"
+	}
+	engine.Run(":" + port)
+}
+
+func setup(midd MiddlewareFunc) *gin.Engine {
+	createFireStoreJSON()
 	if _, err := gocraftConnection(); err != nil {
 		fmt.Printf("%+v\n", err)
 		panic("db connection error!")
@@ -39,14 +49,13 @@ func Server() {
 		"X-CSRF-Token",
 		"Authorization"}
 	engine.Use(cors.New(config))
-	engine.Use(static.Serve("/", static.LocalFile("./static", false)))
 	apiEngine := engine.Group("/api")
 	{
 		portfolioEngine := apiEngine.Group("/portfolios")
 		{
 			portfolioEngine.GET("/:id", getPortfolioHandler)
 			portfolioEngine.GET("", getPortfolioListHandler)
-			authGroup := portfolioEngine.Group("", authMiddleware())
+			authGroup := portfolioEngine.Group("", authMiddleware(midd))
 			{
 				authGroup.POST("", postPortfolioHandler)
 				authGroup.PUT("/:id", putPortfolioHandler)
@@ -54,13 +63,5 @@ func Server() {
 			}
 		}
 	}
-	engine.NoRoute(func(c *gin.Context) {
-		c.File("./static/index.html")
-	})
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		port = "3000"
-	}
-	engine.Run(":" + port)
+	return engine
 }

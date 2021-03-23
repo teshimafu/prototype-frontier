@@ -3,6 +3,7 @@ package server
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -56,6 +57,7 @@ func TestPortfolio(t *testing.T) {
 		initReq.Header.Set("Authorization", "Bearer "+initTestPortfolios[0].UID)
 		resp, _ := client.Do(initReq)
 		respBody, _ := ioutil.ReadAll(resp.Body)
+		fmt.Printf("%+v\n", string(respBody))
 		var portfolio Portfolio
 		json.Unmarshal(respBody, &portfolio)
 		assert.True(t, portfolio.equal(initTestPortfolios[0]))

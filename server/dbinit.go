@@ -23,6 +23,7 @@ func gocraftConnection() (*dbr.Session, error) {
 	}
 	conn, err := dbr.Open("postgres", databaseURL, nil)
 	if err != nil {
+		fmt.Printf("postgres error:%+v\n", err)
 		return nil, err
 	}
 	conn.SetMaxOpenConns(10)

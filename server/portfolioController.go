@@ -1,12 +1,11 @@
 package server
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	"github.com/gocraft/dbr"
 )
 
 func getPortfolioHandler(c *gin.Context) {
@@ -17,7 +16,7 @@ func getPortfolioHandler(c *gin.Context) {
 	}
 	portfolio, err := getPortfolio(id)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if err.Error() == dbr.ErrNotFound.Error() {
 			c.JSON(404, gin.H{"message": "データが見つかりませんでした"})
 			return
 		}
@@ -69,14 +68,24 @@ func putPortfolioHandler(c *gin.Context) {
 		return
 	}
 
+	portfolio, err := getPortfolio(id)
+	if err != nil {
+		if err.Error() == dbr.ErrNotFound.Error() {
+			c.JSON(404, gin.H{"message": "データが見つかりませんでした"})
+			return
+		}
+		c.JSON(500, gin.H{"message": "DB接続エラー"})
+		return
+	}
+
 	if uid, isExist := c.Get("AuthorizedUID"); isExist == false {
 		c.JSON(500, gin.H{"message": "UID取得失敗"})
 		return
-	} else if p.UID != "" && uid != p.UID {
+	} else if p.UID != "" && uid != p.UID && portfolio.UID != "" && uid != portfolio.UID {
 		c.JSON(401, gin.H{"message": "許可がありません"})
 		return
 	}
-	portfolio, err := putPortfolio(id, &p)
+	portfolio, err = putPortfolio(id, &p)
 	if err != nil {
 		c.JSON(500, gin.H{"message": "DB接続エラー"})
 		return
@@ -93,7 +102,7 @@ func deletePortfolioHandler(c *gin.Context) {
 	}
 	portfolio, err := getPortfolio(id)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if err.Error() == dbr.ErrNotFound.Error() {
 			c.JSON(404, gin.H{"message": "データが見つかりませんでした"})
 			return
 		}

@@ -1,0 +1,28 @@
+name: golang e2e test CI
+
+on:
+  push:
+    branches: [feature/*]
+
+jobs:
+  test:
+    name: server Test
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: localuser
+      POSTGRES_DBNAME: localdb
+      POSTGRES_PASSWORD: password
+    steps:
+      - uses: actions/checkout@v2
+      - name: compose-run
+        shell: bash
+        run: |
+          docker-compose up -d
+      - name: Set up Go 1.15
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.15
+      - name: Test
+        run: cd server && go test -v ./...

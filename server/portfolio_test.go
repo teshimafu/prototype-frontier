@@ -7,15 +7,22 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPortfolio(t *testing.T) {
+	dir, _ := os.Getwd()
+	filePath := strings.Replace(dir, "server", "db/migrations", 1)
+	Migration("file:" + filePath)
 	var layout = "2006/01/02 03:04:05"
 	initTestPortfolios := [2]Portfolio{
 		{

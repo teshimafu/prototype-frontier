@@ -11,7 +11,7 @@ import (
 
 //Server is start server method
 func Server() {
-
+	Migration("file://db/migrations")
 	var midd = &FirebaseMiddleware{}
 	engine := setup(midd)
 	port := os.Getenv("PORT")

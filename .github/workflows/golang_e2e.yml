@@ -24,7 +24,5 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.15
-      - name: migration DB
-        run: bash migration.sh
       - name: Test
         run: cd server && go test -v ./...

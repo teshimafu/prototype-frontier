@@ -27,7 +27,8 @@ func getPortfolioHandler(c *gin.Context) {
 }
 
 func getPortfolioListHandler(c *gin.Context) {
-	portfolioList, err := getPortfolioList()
+	query := getSearchQuery(c)
+	portfolioList, err := getPortfolioList(query)
 	if err != nil {
 		c.JSON(500, gin.H{"message": "DB接続エラー"})
 		return

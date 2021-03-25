@@ -11,6 +11,13 @@ export interface Portfolio {
   source: string;
   readme: string;
 }
+
+export interface SearchQuery {
+  title: string;
+  author: string;
+  readme: string;
+}
+
 export type InputPortfolio = PartiallyPartial<
   Portfolio,
   "id" | "uid" | "created_at"

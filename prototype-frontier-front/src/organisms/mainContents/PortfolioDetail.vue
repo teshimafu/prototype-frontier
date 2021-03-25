@@ -26,7 +26,7 @@ import Loading from "@/organisms/Loading.vue";
 import Preview from "./Detail/Preview.vue";
 import Edit from "./Detail/Edit.vue";
 import { InputPortfolio, Portfolio } from "../../models/portfolio";
-import PortfolioService from "../../services/portolioService.vue";
+import PortfolioService from "../../services/portolioService";
 import FirebaseService from "../../services/firebaseService";
 
 interface Content {

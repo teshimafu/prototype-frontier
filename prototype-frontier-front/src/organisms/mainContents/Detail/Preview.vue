@@ -2,15 +2,25 @@
   <div class="preview">
     <div class="title">{{ state.portfolio.title }}</div>
     <ul>
-      <li class="date">作成日:{{ showDate(state.portfolio.created_at) }}</li>
-      <li class="author">作成者:{{ state.portfolio.author }}</li>
+      <li>
+        作成日:<span class="date">{{
+          showDate(state.portfolio.created_at)
+        }}</span>
+      </li>
+      <li>
+        作成者:<span class="author">{{ state.portfolio.author }}</span>
+      </li>
       <li>
         成果物リンク:
-        <a :href="state.portfolio.link">{{ state.portfolio.link }}</a>
+        <a class="link" :href="state.portfolio.link">{{
+          state.portfolio.link
+        }}</a>
       </li>
       <li>
         ソースコード:
-        <a :href="state.portfolio.source">{{ state.portfolio.source }}</a>
+        <a class="source" :href="state.portfolio.source">{{
+          state.portfolio.source
+        }}</a>
       </li>
     </ul>
     <div class="readme">

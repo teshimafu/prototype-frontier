@@ -45,11 +45,13 @@ export default defineComponent({
       router.push("/detail/new");
     };
     const searchPortfolio = (text: string) => {
-      const query: SearchQuery = {
-        title: text,
-        author: text,
-        readme: text
-      };
+      const query: SearchQuery | undefined = text
+        ? {
+            title: text,
+            author: text,
+            readme: text
+          }
+        : undefined;
       PortfolioService.getPortfolioList(query)
         .then(res => {
           state.portfolioList = res;

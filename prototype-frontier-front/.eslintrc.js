@@ -16,7 +16,8 @@ module.exports = {
   plugins: ["vue", "prettier"],
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "@typescript-eslint/no-use-before-define": "off"
   },
   overrides: [
     {

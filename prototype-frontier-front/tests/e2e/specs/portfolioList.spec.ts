@@ -67,44 +67,54 @@ describe("portfolio list test", () => {
       });
     });
   });
+
+  const assertPortfolioElement = (
+    e: HTMLElement,
+    expected: PortfolioResponse
+  ) => {
+    assert.equal(e.getElementsByTagName("th")[0].innerText, "" + expected.id);
+    assert.equal(e.getElementsByTagName("td")[0].innerText, expected.title);
+    assert.equal(e.getElementsByTagName("td")[1].innerText, expected.author);
+    const dateView = e.getElementsByTagName("td")[2].innerText;
+    assert.equal(
+      dateView.substring(0, 10),
+      expected.createdAt.substring(0, 10)
+    );
+    assert.equal(
+      dateView.substring(11, 19),
+      expected.createdAt.substring(11, 19)
+    );
+  };
+
+  const assertPortfolioDetail = (
+    e: HTMLElement,
+    expected: PortfolioResponse
+  ) => {
+    const keys = ["title", "date", "author", "link", "source"];
+    expected["title"];
+    keys.forEach(className => {
+      switch (className) {
+        case "date":
+          assert.equal(
+            e
+              .getElementsByClassName(className)[0]
+              .textContent?.substring(0, 10) ?? "",
+            expected.createdAt.substring(0, 10)
+          );
+          assert.equal(
+            e
+              .getElementsByClassName(className)[0]
+              .textContent?.substring(11, 19) ?? "",
+            expected.createdAt.substring(11, 19)
+          );
+          break;
+        default:
+          assert.equal(
+            e.getElementsByClassName(className)[0].textContent,
+            "" + expected[className as keyof PortfolioResponse]
+          );
+          break;
+      }
+    });
+  };
 });
-
-const assertPortfolioElement = (
-  e: HTMLElement,
-  expected: PortfolioResponse
-) => {
-  assert.equal(e.getElementsByTagName("th")[0].innerText, "" + expected.id);
-  assert.equal(e.getElementsByTagName("td")[0].innerText, expected.title);
-  assert.equal(e.getElementsByTagName("td")[1].innerText, expected.author);
-  const dateView = e.getElementsByTagName("td")[2].innerText;
-  assert.equal(dateView.substring(0, 10), expected.created_at.substring(0, 10));
-  assert.equal(
-    dateView.substring(11, 19),
-    expected.created_at.substring(11, 19)
-  );
-};
-
-const assertPortfolioDetail = (e: HTMLElement, expected: PortfolioResponse) => {
-  const keys = ["title", "date", "author", "link", "source"];
-  expected["title"];
-  keys.forEach(className => {
-    switch (className) {
-      case "date":
-        assert.equal(
-          e.getElementsByClassName(className)[0].textContent!.substring(0, 10),
-          expected.created_at.substring(0, 10)
-        );
-        assert.equal(
-          e.getElementsByClassName(className)[0].textContent!.substring(11, 19),
-          expected.created_at.substring(11, 19)
-        );
-        break;
-      default:
-        assert.equal(
-          e.getElementsByClassName(className)[0].textContent,
-          "" + expected[className as keyof PortfolioResponse]
-        );
-        break;
-    }
-  });
-};

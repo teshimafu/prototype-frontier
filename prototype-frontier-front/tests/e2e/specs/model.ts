@@ -7,6 +7,6 @@ export type PortfolioResponse = {
   readme: string;
   source: string;
   link: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };

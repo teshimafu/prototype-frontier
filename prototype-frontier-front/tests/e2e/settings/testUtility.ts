@@ -10,8 +10,8 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
-    createdAt: "2021-01-01T12:34:56.123456Z",
-    updatedAt: "2021-01-01T12:34:56.123456Z"
+    created_at: "2021-01-01T12:34:56.123456Z",
+    updated_at: "2021-01-01T12:34:56.123456Z"
   },
   {
     id: 2,
@@ -22,8 +22,8 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
-    createdAt: "2021-01-01T12:34:56.123456Z",
-    updatedAt: "2021-01-01T12:34:56.123456Z"
+    created_at: "2021-01-01T12:34:56.123456Z",
+    updated_at: "2021-01-01T12:34:56.123456Z"
   },
   {
     id: 3,
@@ -34,8 +34,8 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
-    createdAt: "2021-01-01T12:34:56.123456Z",
-    updatedAt: "2021-01-01T12:34:56.123456Z"
+    created_at: "2021-01-01T12:34:56.123456Z",
+    updated_at: "2021-01-01T12:34:56.123456Z"
   }
 ];
 

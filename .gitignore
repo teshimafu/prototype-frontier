@@ -4,3 +4,5 @@
 .env
 prototype-frontier-firebase-adminsdk-*.json
 firebaseCredentials.json
+
+.DS_Store

@@ -1,6 +1,6 @@
 import { assert } from "chai";
-import { PortfolioResponse } from "./model";
-import { initStubAPI, stubList, TestUtility } from "./testUtility";
+import { PortfolioResponse } from "../settings/model";
+import { initStubAPI, stubList, TestUtility } from "../settings/testUtility";
 
 describe("portfolio list test", () => {
   beforeEach(() => {
@@ -78,11 +78,11 @@ describe("portfolio list test", () => {
     const dateView = e.getElementsByTagName("td")[2].innerText;
     assert.equal(
       dateView.substring(0, 10),
-      expected.createdAt.substring(0, 10)
+      expected.created_at.substring(0, 10)
     );
     assert.equal(
       dateView.substring(11, 19),
-      expected.createdAt.substring(11, 19)
+      expected.created_at.substring(11, 19)
     );
   };
 
@@ -94,26 +94,25 @@ describe("portfolio list test", () => {
     expected["title"];
     keys.forEach(className => {
       switch (className) {
-        case "date":
+        case "date": {
+          const date = e.getElementsByClassName(className)[0].textContent;
           assert.equal(
-            e
-              .getElementsByClassName(className)[0]
-              .textContent?.substring(0, 10) ?? "",
-            expected.createdAt.substring(0, 10)
+            date ? date.substring(0, 10) : "",
+            expected.created_at.substring(0, 10)
           );
           assert.equal(
-            e
-              .getElementsByClassName(className)[0]
-              .textContent?.substring(11, 19) ?? "",
-            expected.createdAt.substring(11, 19)
+            date ? date.substring(11, 19) : "",
+            expected.created_at.substring(11, 19)
           );
           break;
-        default:
+        }
+        default: {
           assert.equal(
             e.getElementsByClassName(className)[0].textContent,
             "" + expected[className as keyof PortfolioResponse]
           );
           break;
+        }
       }
     });
   };

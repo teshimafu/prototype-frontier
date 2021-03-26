@@ -1,7 +1,10 @@
 package server
 
 import (
+	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func getPortfolio(ID int) (Portfolio, error) {
@@ -15,14 +18,19 @@ func getPortfolio(ID int) (Portfolio, error) {
 	return portfolio, err
 }
 
-func getPortfolioList() ([](Portfolio), error) {
+func getPortfolioList(searchOptions SearchQuery) ([](Portfolio), error) {
 	sess, err := gocraftConnection()
 	if err != nil {
 		return []Portfolio{}, err
 	}
 
-	var portfolioList []Portfolio
-	sess.Select("*").From("portfolio").OrderDesc("id").Load(&portfolioList)
+	portfolioList := []Portfolio{}
+	stmt := sess.Select("*").From("portfolio")
+	if searchSQL := searchOptions.getWhereSQL(); searchSQL != "" {
+		stmt = stmt.Where(searchSQL)
+	}
+	stmt = stmt.OrderDesc("id")
+	stmt.Load(&portfolioList)
 	return portfolioList, nil
 }
 
@@ -74,4 +82,28 @@ func deletePortfolio(id int) error {
 	_, err = sess.DeleteFrom("portfolio").
 		Where("id = ?", id).Exec()
 	return err
+}
+
+func getSearchQuery(c *gin.Context) SearchQuery {
+	searchKeys := []string{"title", "author", "readme"}
+	queries := make(SearchQuery)
+	for _, v := range searchKeys {
+		value := c.Query(v)
+		if value != "" {
+			value = strings.Replace(value, "'", "\"", -1)
+			queries[v] = value
+		}
+	}
+	return queries
+}
+
+func (sq *SearchQuery) getWhereSQL() string {
+	sqlString := ""
+	for k, v := range *sq {
+		if len(sqlString) != 0 {
+			sqlString += " OR "
+		}
+		sqlString += "portfolio." + k + " LIKE '%" + v + "%'"
+	}
+	return sqlString
 }

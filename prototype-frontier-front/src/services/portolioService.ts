@@ -1,5 +1,4 @@
-<script lang="ts">
-import { Portfolio, InputPortfolio } from "../models/portfolio";
+import { Portfolio, InputPortfolio, SearchQuery } from "../models/portfolio";
 import { axiosInstance, axiosAuthInstance } from "../services/axiosConfig";
 
 export default class PortfolioService {
@@ -17,9 +16,12 @@ export default class PortfolioService {
   /**
    * getPortfolioList
    */
-  public static getPortfolioList = async (): Promise<Portfolio[]> => {
+  public static getPortfolioList = async (
+    searchQuery?: SearchQuery
+  ): Promise<Portfolio[]> => {
     const { data } = await axiosInstance.get<Portfolio[]>(
-      PortfolioService.PATH
+      PortfolioService.PATH,
+      { params: searchQuery }
     );
     return data;
   };
@@ -51,4 +53,3 @@ export default class PortfolioService {
     await (await axiosAuthInstance).delete(PortfolioService.PATH + "/" + id);
   };
 }
-</script>

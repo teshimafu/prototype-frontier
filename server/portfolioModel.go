@@ -20,3 +20,6 @@ type Portfolio struct {
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 }
+
+//SearchQuery is query to search portfolio from DB
+type SearchQuery map[string]string

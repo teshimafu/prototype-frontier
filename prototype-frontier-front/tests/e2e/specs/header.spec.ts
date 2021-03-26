@@ -1,5 +1,3 @@
-// https://docs.cypress.io/api/introduction/api.html
-
 describe("Header test", () => {
   it("headerの表示が正しいこと", () => {
     cy.visit("/");

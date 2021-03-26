@@ -11,6 +11,12 @@ export default defineComponent({
   setup(props, context) {
     const state = reactive<{ value: string }>({ value: props.input });
     watch(
+      () => props.input,
+      value => {
+        state.value = value;
+      }
+    );
+    watch(
       () => state.value,
       value => {
         context.emit("model", value);

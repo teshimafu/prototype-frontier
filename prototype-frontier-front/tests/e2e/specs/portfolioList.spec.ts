@@ -62,7 +62,7 @@ describe("portfolio list test", () => {
         elements[index].click();
         cy.url().should("include", `/detail/${portfolio.id}`);
         cy.get(".preview").then(element => {
-          assertPortfolioDetail(element[0], portfolio);
+          TestUtility.assertPortfolioDetail(element[0], portfolio);
         });
       });
     });
@@ -84,36 +84,5 @@ describe("portfolio list test", () => {
       dateView.substring(11, 19),
       expected.created_at.substring(11, 19)
     );
-  };
-
-  const assertPortfolioDetail = (
-    e: HTMLElement,
-    expected: PortfolioResponse
-  ) => {
-    const keys = ["title", "date", "author", "link", "source"];
-    expected["title"];
-    keys.forEach(className => {
-      switch (className) {
-        case "date": {
-          const date = e.getElementsByClassName(className)[0].textContent;
-          assert.equal(
-            date ? date.substring(0, 10) : "",
-            expected.created_at.substring(0, 10)
-          );
-          assert.equal(
-            date ? date.substring(11, 19) : "",
-            expected.created_at.substring(11, 19)
-          );
-          break;
-        }
-        default: {
-          assert.equal(
-            e.getElementsByClassName(className)[0].textContent,
-            "" + expected[className as keyof PortfolioResponse]
-          );
-          break;
-        }
-      }
-    });
   };
 });

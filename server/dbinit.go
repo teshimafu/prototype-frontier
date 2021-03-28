@@ -26,7 +26,8 @@ func Migration(filePath string) {
 	}
 	m, err := migrate.New(
 		filePath,
-		databaseURL)
+		databaseURL,
+	)
 	if err != nil {
 		log.Fatal(err)
 	}

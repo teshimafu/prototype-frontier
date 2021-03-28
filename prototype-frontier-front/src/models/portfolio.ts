@@ -10,6 +10,7 @@ export interface Portfolio {
   link: string;
   source: string;
   readme: string;
+  access_count: number;
 }
 
 export interface SearchQuery {
@@ -20,5 +21,5 @@ export interface SearchQuery {
 
 export type InputPortfolio = PartiallyPartial<
   Portfolio,
-  "id" | "uid" | "created_at"
+  "id" | "uid" | "created_at" | "access_count"
 >;

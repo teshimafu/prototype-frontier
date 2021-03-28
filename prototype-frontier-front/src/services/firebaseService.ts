@@ -1,6 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 import firebaseConfig from "../../firebaseConfig.json";
+import restAPIConfig from "../../restAPIConfig.json";
 
 export default class FirebaseService {
   private static INSTANCE: FirebaseService;
@@ -50,5 +52,20 @@ export default class FirebaseService {
   public async logout() {
     this.user = null;
     await firebase.auth().signOut();
+  }
+
+  public async getAccessCount(): Promise<number | null> {
+    const db = firebase.database();
+    let count: number;
+    try {
+      const snapshot = await db
+        .ref("settings/" + restAPIConfig.counterKey)
+        .get();
+      count = snapshot.val() + 1;
+    } catch {
+      return null;
+    }
+    db.ref("settings/" + restAPIConfig.counterKey).set(count);
+    return count;
   }
 }

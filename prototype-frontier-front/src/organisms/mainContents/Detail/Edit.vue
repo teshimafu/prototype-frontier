@@ -72,7 +72,7 @@ export default defineComponent({
       state.portfolio.readme = text;
     };
     const setInputValue = function(
-      name: keyof Omit<InputPortfolio, "id" | "created_at">,
+      name: keyof Omit<InputPortfolio, "id" | "created_at" | "access_count">,
       text: string
     ) {
       state.portfolio[name] = text;

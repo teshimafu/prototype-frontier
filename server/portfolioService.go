@@ -5,17 +5,22 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gocraft/dbr/v2"
 )
 
-func getPortfolio(ID int) (Portfolio, error) {
+func getPortfolio(id int) (Portfolio, error) {
 	sess, err := gocraftConnection()
 	if err != nil {
 		return Portfolio{}, err
 	}
 
-	portfolio := Portfolio{}
-	err = sess.Select("*").From("portfolio").Where("id = ?", ID).LoadOne(&portfolio)
-	return portfolio, err
+	p := Portfolio{}
+	err = sess.Select("*").From("portfolio").Where("id = ?", id).LoadOne(&p)
+	if err != nil {
+		return Portfolio{}, err
+	}
+	err = countUpPortfolio(sess, &p)
+	return p, err
 }
 
 func getPortfolioList(searchOptions SearchQuery) ([](Portfolio), error) {
@@ -81,6 +86,28 @@ func deletePortfolio(id int) error {
 	}
 	_, err = sess.DeleteFrom("portfolio").
 		Where("id = ?", id).Exec()
+	return err
+}
+
+func countUpPortfolio(sess *dbr.Session, p *Portfolio) error {
+	if p.AccessCount.Valid {
+		p.AccessCount = dbr.NewNullInt64(p.AccessCount.Int64 + 1)
+	} else {
+		p.AccessCount = dbr.NewNullInt64(1)
+	}
+	portfolioMap := map[string]interface{}{
+		"title":        p.Title,
+		"author":       p.Author,
+		"abstruct":     p.Abstruct,
+		"readme":       p.Readme,
+		"source":       p.Source,
+		"link":         p.Link,
+		"access_count": p.AccessCount,
+		"updated_at":   time.Now(),
+	}
+	_, err := sess.Update("portfolio").
+		SetMap(portfolioMap).
+		Where("id = ?", p.ID).Exec()
 	return err
 }
 

@@ -10,6 +10,7 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
+    access_count: 10,
     created_at: "2021-01-01T12:34:56.123456Z",
     updated_at: "2021-01-01T12:34:56.123456Z"
   },
@@ -22,6 +23,7 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
+    access_count: 20,
     created_at: "2021-01-01T12:34:56.123456Z",
     updated_at: "2021-01-01T12:34:56.123456Z"
   },
@@ -34,6 +36,7 @@ export const stubList: PortfolioResponse[] = [
     readme: "# readme",
     source: "sourcesourcesourcesourcesourcesource",
     link: "linklinklinklinklinklinklink",
+    access_count: 30,
     created_at: "2021-01-01T12:34:56.123456Z",
     updated_at: "2021-01-01T12:34:56.123456Z"
   }
@@ -80,4 +83,34 @@ export const initStubAPI = (cy: Cypress.cy & EventEmitter) => {
 
 export class TestUtility {
   public static waitTime = 100 as const;
+  public static assertPortfolioDetail = (
+    e: HTMLElement,
+    expected: PortfolioResponse
+  ) => {
+    const keys = ["title", "date", "author", "link", "source"];
+    expected["title"];
+    keys.forEach(className => {
+      switch (className) {
+        case "date": {
+          const date = e.getElementsByClassName(className)[0].textContent;
+          assert.equal(
+            date ? date.substring(0, 10) : "",
+            expected.created_at.substring(0, 10)
+          );
+          assert.equal(
+            date ? date.substring(11, 19) : "",
+            expected.created_at.substring(11, 19)
+          );
+          break;
+        }
+        default: {
+          assert.equal(
+            e.getElementsByClassName(className)[0].textContent,
+            "" + expected[className as keyof PortfolioResponse]
+          );
+          break;
+        }
+      }
+    });
+  };
 }

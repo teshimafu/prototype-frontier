@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gocraft/dbr/v2"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
@@ -155,8 +156,20 @@ func TestPortfolio(t *testing.T) {
 		respBody, _ := ioutil.ReadAll(resp.Body)
 		var portfolio Portfolio
 		json.Unmarshal(respBody, &portfolio)
-		assert.True(t, portfolio.equal(initTestPortfolios[0]))
+		expected := initTestPortfolios[0]
+		expected.AccessCount = dbr.NewNullInt64(1)
+		assert.True(t, portfolio.equal(expected))
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+		for i := expected.AccessCount.Int64 + 1; i < 50; i++ {
+			req, _ := http.NewRequest("GET", testServer.URL+"/api/portfolios/"+strconv.FormatInt(createdID, 10), nil)
+			resp, _ := client.Do(req)
+			respBody, _ = ioutil.ReadAll(resp.Body)
+			json.Unmarshal(respBody, &portfolio)
+			expected.AccessCount = dbr.NewNullInt64(i)
+			assert.True(t, portfolio.equal(expected))
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
+		}
 	})
 
 	t.Run("put portfolio /:id", func(t *testing.T) {
@@ -224,5 +237,6 @@ func (p *Portfolio) equal(expected Portfolio) bool {
 		p.Abstruct == expected.Abstruct &&
 		p.Readme == expected.Readme &&
 		p.Source == expected.Source &&
-		p.Link == expected.Link
+		p.Link == expected.Link &&
+		(expected.AccessCount.Valid == false || expected.AccessCount.Int64 == p.AccessCount.Int64)
 }
